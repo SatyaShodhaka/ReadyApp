@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
-const  index= () => {
+const TabsLayout = () => {
   return (
-    <View className='flex-1 justify-center items-center'>
-      <Text> Index from app </Text>
+    <View>
+      <Text>TabsLayout</Text>
     </View>
   )
 }
 
-export default index;
+export default TabsLayout
 
 const styles = StyleSheet.create({})
