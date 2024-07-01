@@ -1,10 +1,16 @@
 import {StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native'
-import React from 'react'
-import { Link, Redirect, router } from 'expo-router'
+import React, { useEffect } from 'react'
+import { router } from 'expo-router'
 import { SafeAreaView} from 'react-native-safe-area-context'
 import CustomButton from './components/CustomButton'
 import { StatusBar } from 'expo-status-bar'
-const  App= () => {
+import { useState } from 'react'
+import { User, onAuthStateChanged } from 'firebase/auth'
+import { FIREBASE_AUTH } from '@/firebaseConfig'
+
+
+const  App = () => {
+
   return (
     <SafeAreaView>
       <ScrollView contentContainerStyle={{height: '100%'}}>
