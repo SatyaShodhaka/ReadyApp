@@ -21,7 +21,7 @@ const Profile = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-1 justify-center items-center p-4">
+      <View className="flex-1 justify-start items-center p-4">
         <Text className="text-2xl font-semibold mb-5">Profile</Text>
         {user && (
           <View className="w-full mb-5 px-4">
