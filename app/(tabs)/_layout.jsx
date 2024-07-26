@@ -36,6 +36,15 @@ const TabsLayout = () => {
         }}
       />
       <Tabs.Screen
+        name="survey"
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon icon="access-time-filled" color={color} name="Survey" focused={focused} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           headerShown: false,
