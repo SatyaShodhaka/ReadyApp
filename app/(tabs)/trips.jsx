@@ -15,20 +15,32 @@ const Trips = () => {
   const user = FIREBASE_AUTH.currentUser;
 
   useEffect(() => {
-    (async () => {
+    let intervalId;
+
+    const startLocationTracking = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      intervalId = setInterval(async () => {
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
 
-      if (location) {
-        storeLocation(location);
+        if (location) {
+          storeLocation(location);
+        }
+      }, 10000); // 10000 milliseconds = 10 seconds
+    };
+
+    startLocationTracking();
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
       }
-    })();
+    };
   }, []);
 
   const storeLocation = async (location) => {
@@ -41,7 +53,7 @@ const Trips = () => {
           longitude: location.coords.longitude,
           timestamp: serverTimestamp(),
         });
-        Alert.alert('Location stored successfully!');
+        console.log('Location stored successfully!');
       } catch (error) {
         console.error('Error storing location: ', error);
         Alert.alert('Error storing location');
