@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, Alert, Modal, Button } from 'react-native';
 import { WebView } from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FIREBASE_AUTH } from '../../firebaseConfig';
+import { FIREBASE_AUTH, FIREBASE_FIRESTORE } from '../../firebaseConfig';
+import * as Location from 'expo-location';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // Constants
 const AUTH_URL = 'https://login.uber.com/oauth/v2/authorize';
@@ -110,6 +112,59 @@ const Home = () => {
   const [authCompleted, setAuthCompleted] = useState(false);
   const user = FIREBASE_AUTH.currentUser;
 
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+
+  useEffect(() => {
+    let intervalId;
+
+    const startLocationTracking = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      intervalId = setInterval(async () => {
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation(location);
+
+        if (location) {
+          storeLocation(location);
+        }
+      }, 10000); // 10000 milliseconds = 10 seconds
+    };
+
+    startLocationTracking();
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, []);
+
+  const storeLocation = async (location) => {
+    if (user) {
+      try {
+        await addDoc(collection(FIREBASE_FIRESTORE, 'locations'), {
+          uid: user.uid,
+          email: user.email,
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          timestamp: serverTimestamp(),
+        });
+        console.log('Location stored successfully!');
+      } catch (error) {
+        console.error('Error storing location: ', error);
+        Alert.alert('Error storing location');
+      }
+    } else {
+      Alert.alert('No user is authenticated');
+    }
+  };
+
+
   useEffect(() => {
     // Check for existing access token
     const checkForExistingToken = async () => {
@@ -143,11 +198,12 @@ const Home = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 items-center justify-start bg-white mt-10">
-      <View className="w-full px-4 py-6">
+    <SafeAreaView className="flex-1 items-center justify-start bg-white">
+      <View className="w-full px-4 py-6 mt-20">
         {user && (
-          <Text className="text-xl font-semibold mb-4">
-            Welcome, {user.email}!
+          <Text className="text-4xl font-semibold mb-4">
+            Welcome,{"\n"}
+            {user.email}! 🎉
           </Text>
         )}
         <View className="w-full mt-6">
@@ -169,6 +225,8 @@ const Home = () => {
           )}
         </View>
       </View>
+
+      {/* Initiate location storing */}
       {authInitiated && (
         <AuthScreen
           onAuthComplete={handleAuthComplete}

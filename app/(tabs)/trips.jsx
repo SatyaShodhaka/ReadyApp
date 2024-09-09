@@ -1,83 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Alert, Button } from 'react-native';
-import * as Location from 'expo-location';
-import { FIREBASE_AUTH, FIREBASE_FIRESTORE } from '../../firebaseConfig'; // Adjust the import according to your file structure
+import { Text, View, FlatList } from 'react-native';
 import { styled } from 'nativewind';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { data } from './data'; // Assume this is an array of trip objects
 
 const StyledView = styled(View);
 const StyledText = styled(Text);
-const StyledButton = styled(Button);
+
+const TripIncomeDetails = ({ income }) => {
+  return (
+    <View className="flex-1 justify-center">
+      <Text className="text-lg font-semibold text-gray-800">Income Details</Text>
+      <Text className="text-md text-gray-800">Currency: {income.currency}</Text>
+      <Text className="text-md text-gray-800">Total Charge: ${income.total_charge}</Text>
+      <Text className="text-md text-gray-800">Fees: ${income.fees}</Text>
+      <Text className="text-md text-gray-800">Total: ${income.total}</Text>
+      <Text className="text-md text-gray-800">Pay: ${income.pay}</Text>
+      <Text className="text-md text-gray-800">Tips: {income.tips !== null ? `$${income.tips}` : 'No tips'}</Text>
+      <Text className="text-md text-gray-800">Bonus: ${income.bonus}</Text>
+      <Text className="text-md text-gray-800">Other: {income.other !== null ? `$${income.other}` : 'No other earnings'}</Text>
+      <Text className="text-md text-gray-800">Customer Price: ${income.customer_price}</Text>
+    </View>
+  );
+};
 
 const Trips = () => {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
-  const user = FIREBASE_AUTH.currentUser;
+  const [tripData, setTripData] = useState([]);
 
   useEffect(() => {
-    let intervalId;
-
-    const startLocationTracking = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
-        return;
-      }
-
-      intervalId = setInterval(async () => {
-        let location = await Location.getCurrentPositionAsync({});
-        setLocation(location);
-
-        if (location) {
-          storeLocation(location);
-        }
-      }, 10000); // 10000 milliseconds = 10 seconds
-    };
-
-    startLocationTracking();
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
+    if (data) {
+      setTripData(data); // Assume data is an array of trip objects
+    }
   }, []);
 
-  const storeLocation = async (location) => {
-    if (user) {
-      try {
-        await addDoc(collection(FIREBASE_FIRESTORE, 'locations'), {
-          uid: user.uid,
-          email: user.email,
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-          timestamp: serverTimestamp(),
-        });
-        console.log('Location stored successfully!');
-      } catch (error) {
-        console.error('Error storing location: ', error);
-        Alert.alert('Error storing location');
-      }
-    } else {
-      Alert.alert('No user is authenticated');
-    }
-  };
-
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-  }
+  const renderTrip = ({ item }) => (
+    <View className="flex-row p-4 m-2 border border-gray-300 rounded-lg bg-white">
+      {/* Trip Details */}
+      <View className="flex-1 justify-center">
+        <Text className="text-lg font-semibold text-gray-800">Trip ID: {item.id}</Text>
+        <Text className="text-md text-gray-800">Employer: {item.employer}</Text>
+        <Text className="text-md text-gray-800">Type: {item.type}</Text>
+        <Text className="text-md text-gray-800">Status: {item.status}</Text>
+        <Text className="text-md text-gray-800">Duration: {item.duration}</Text>
+        <Text className="text-md text-gray-800">
+          Started at: {new Date(item.start_datetime).toLocaleDateString()}{' '}
+          {new Date(item.start_datetime).toLocaleTimeString()}
+        </Text>
+        <Text className="text-md text-gray-800">
+          Ended at: {new Date(item.end_datetime).toLocaleDateString()}{' '}
+          {new Date(item.end_datetime).toLocaleTimeString()}
+        </Text>
+        {/* Uncomment to render income details */}
+        {/* <TripIncomeDetails income={item.income} /> */}
+      </View>
+    </View>
+  );
 
   return (
-    <StyledView className="flex-1 items-center justify-center bg-white">
-      <StyledText className="text-lg mb-4">{text}</StyledText>
-      <StyledButton
-        title="Get Location"
-        onPress={() => {}}
-        className="bg-blue-500 text-white p-4 rounded"
-      />
+    <StyledView className="flex-1 items-center justify-start bg-white">
+      <View className="w-full px-4 py-6 mt-20">
+        <StyledText className="text-4xl font-semibold mb-4">Trips</StyledText>
+        <FlatList
+          data={tripData} // Pass the array of trip data
+          keyExtractor={(item) => item.id.toString()} // Unique key for each trip
+          renderItem={renderTrip} // Function to render each trip item
+        />
+      </View>
     </StyledView>
   );
 };

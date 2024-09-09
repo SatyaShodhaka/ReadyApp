@@ -21,8 +21,9 @@ const Profile = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-white">
-      <View className="flex-1 justify-start items-center p-4">
-        <Text className="text-2xl font-semibold mb-5">Profile</Text>
+      <View className="flex-1 justify-start p-4">
+        <Text className="text-4xl font-semibold mb-4">Profile</Text>
+        <View className="items-center">
         {user && (
           <View className="w-full mb-5 px-4">
             <Text className="text-lg font-semibold">Email:</Text>
@@ -34,6 +35,7 @@ const Profile = () => {
           handlePress={handleLogout}
           containerStyles="mt-10 w-full"
         />
+        </View>
       </View>
     </SafeAreaView>
   );

@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-, "app/components/CustomButton.jsx", "app/index.jsx", "app/(auth)/_layout.jsx", "app/(auth)/sign-in.jsx", "app/(auth)/sign-up.jsx", "app/(tabs)/_layout.jsx", "app/(tabs)/explore.jsx", "app/(tabs)/index.jsx", "app/_layout.jsx", "app/+html.jsx", "app/+not-found.jsx"  ]
+, "app/components/CustomButton.jsx", "app/index.jsx", "app/(auth)/_layout.jsx", "app/(auth)/sign-in.jsx", "app/(auth)/sign-up.jsx", "app/(tabs)/_layout.jsx", "app/(tabs)/explore.jsx", "app/(tabs)/index.jsx", "app/_layout.jsx", "app/+html.jsx", "app/+not-found.jsx", "constants/index.js"  ]
 }

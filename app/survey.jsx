@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ScrollView, ActivityIndicator, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState } from 'react';
-import CustomButton from '../components/CustomButton';
+import CustomButton from './components/CustomButton';
 
 const Survey = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
