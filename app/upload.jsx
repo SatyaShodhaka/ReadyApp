@@ -3,7 +3,6 @@ import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DocumentPicker from 'react-native-document-picker';
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
-import { FIREBASE_STORAGE } from '../firebaseConfig';
 import RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
 

@@ -3,10 +3,6 @@ import React, { useEffect } from 'react'
 import { router } from 'expo-router'
 import { SafeAreaView} from 'react-native-safe-area-context'
 import CustomButton from './components/CustomButton'
-import { StatusBar } from 'expo-status-bar'
-import { useState } from 'react'
-import { User, onAuthStateChanged } from 'firebase/auth'
-import { FIREBASE_AUTH } from '@/firebaseConfig'
 
 const  App = () => {
 

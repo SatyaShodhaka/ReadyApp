@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CustomButton from '../components/CustomButton';
-import { FIREBASE_AUTH } from '@/firebaseConfig'; // Ensure this path is correct
+import { FIREBASE_AUTH } from '../firebaseConfig'; // Ensure this path is correct
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'expo-router';
 

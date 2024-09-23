@@ -5,7 +5,7 @@ import { useState } from 'react'
 import CustomButton from '../components/CustomButton'
 import { Link } from 'expo-router'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { FIREBASE_AUTH } from '../../firebaseConfig'
+import { FIREBASE_AUTH } from '../firebaseConfig'
 
 const SignUp = () => {
 

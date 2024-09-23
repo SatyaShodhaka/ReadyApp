@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, FlatList, TouchableOpacity, Alert } from 'react-native';
 import { styled } from 'nativewind';
 import { FontAwesome } from '@expo/vector-icons'; // Import FontAwesome from Expo
-import { FIREBASE_AUTH, FIREBASE_FIRESTORE } from '../../firebaseConfig'; // Make sure this points to your firebase config
+import { FIREBASE_AUTH, FIREBASE_FIRESTORE } from '../firebaseConfig'; // Make sure this points to your firebase config
 import { collection, setDoc, doc, serverTimestamp } from 'firebase/firestore'; // Import Firestore functions
 import { data } from './data'; // Assume this is an array of trip objects
 

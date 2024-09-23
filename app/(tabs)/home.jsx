@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, View, Text, TouchableOpacity, Alert, Modal, Button } from 'react-native';
 import { WebView } from 'react-native-webview';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { FIREBASE_AUTH, FIREBASE_FIRESTORE } from '../../firebaseConfig';
+import { FIREBASE_AUTH, FIREBASE_FIRESTORE } from '../firebaseConfig';
 import * as Location from 'expo-location';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 

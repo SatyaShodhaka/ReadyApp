@@ -3,7 +3,7 @@ import React from 'react'
 import { Stack, useRouter } from 'expo-router'
 import { useState, useEffect } from 'react'
 import { User, onAuthStateChanged } from 'firebase/auth'
-import { FIREBASE_AUTH } from '../../firebaseConfig'
+import { FIREBASE_AUTH } from '../firebaseConfig'
 
 const AuthLayout = () => {
 

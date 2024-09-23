@@ -4,7 +4,7 @@ import FormField from '../components/FormField'
 import { useState } from 'react'
 import CustomButton from '../components/CustomButton'
 import { Link } from 'expo-router'
-import { FIREBASE_AUTH } from '../../firebaseConfig'
+import { FIREBASE_AUTH } from '../firebaseConfig'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 
 import { router } from 'expo-router'
