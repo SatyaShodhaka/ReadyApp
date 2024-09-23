@@ -6,8 +6,8 @@ import { icons } from '../../constants';
 
 const TabIcon = ({source, focused}) => {
   return(
-    <View className={`flex flex-row items-center justify-center roundeed-full ${focused ? "bg-general-300" : ""}`}>
-      <View className={`rounded-full w-12 h-12 items-center justify-center ${focused ? "bg-general-400" : ""}`}>
+    <View className={`flex items-center justify-center roundeed-full ${focused ? "bg-general-300" : ""}`}>
+      <View className={`flex rounded-full w-12 h-12 items-center justify-center ${focused ? "bg-general-400" : ""}`}>
         <Image source={source} resizeMode="contatin" tintColor="white" className="w-7 h-7" />
       </View>
     </View>
